@@ -21,9 +21,27 @@ helpers do
 			total -= 10
 		end
 		return total
-   end
-end
 
+   end
+   def card_image(card)
+   	 suit = case card[0]
+   	 when 'H' then 'hearts'
+   	 when 'D' then 'diamonds'
+   	 when 'C' then 'clubs'
+   	 when 'S' then 'spades'   	 	
+end
+ value = card[1]
+ if ['J','Q','K','A'].include?(value)
+ 	value = case card[1]
+ 	when 'J' then 'jack'
+ 	when 'Q' then 'queen'
+ 	when 'K' then 'king'
+ 	when 'A' then 'ace'
+ 	end
+ end
+ return "<img src='/images/cards/#{suit}_#{value}.jpg' class='card_image'>"
+end
+end
 before do 
 	@hit_stay_buttons = true
 end
@@ -42,6 +60,10 @@ get '/new_player' do
 end
 
 post '/new_player' do
+	if params[:player_name].empty?
+		@error = "Name is required"
+		halt erb(:new_player)
+	end
   session[:player_name] = params[:player_name]
   redirect '/game'
 end
@@ -63,7 +85,12 @@ end
  
 post '/game/player/hit' do
   session[:player_cards] << session[:deck].pop
-  if calculate_total(session[:player_cards]) > 21
+
+  player_total = calculate_total(session[:player_cards])
+  if player_total == 21
+  	@success = "Congratulations you ve won !!"
+  	@hit_stay_buttons = false
+  elsif calculate_total(session[:player_cards]) > 21
   	@error = "you are busted !"
   	@hit_stay_buttons = false
   end

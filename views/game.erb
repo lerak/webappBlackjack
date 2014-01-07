@@ -1,17 +1,17 @@
 <h3>welcome <%= session[:player_name] %></h3>
 <div class='well'>
 <h5>Dealer Cards:</h5>
-<ul><% session[:dealer_cards].each do |card|%>
-	<li><%= card.to_s %></li>
+<% session[:dealer_cards].each do |card|%>
+	<%= card_image(card) %>
 	<% end %>
-</ul></div>
+</div>
 <div class='well'>
 <h5>Player Cards</h5>
-<ul>
+
 	<%session[:player_cards].each do |card| %>
-	<li><%= card.to_s %></li>
+	<%= card_image(card) %>
 	<% end %>
-</ul></div>
+</div>
 
 <p>player <%= session[:player_name]%> has <%= calculate_total(session[:player_cards])%></p>
 
