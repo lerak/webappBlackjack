@@ -1,1 +1,27 @@
-game <%= session[:player_name] %>
+<h3>welcome <%= session[:player_name] %></h3>
+<div class='well'>
+<h5>Dealer Cards:</h5>
+<ul><% session[:dealer_cards].each do |card|%>
+	<li><%= card.to_s %></li>
+	<% end %>
+</ul></div>
+<div class='well'>
+<h5>Player Cards</h5>
+<ul>
+	<%session[:player_cards].each do |card| %>
+	<li><%= card.to_s %></li>
+	<% end %>
+</ul></div>
+
+<p>player <%= session[:player_name]%> has <%= calculate_total(session[:player_cards])%></p>
+
+<% if @hit_stay_buttons %>
+<form id="hit_form" action='/game/player/hit' method='post'>
+<input type='submit' class='btn btn-success' value='Hit' />
+</form>
+<form id="stay_form" action='/game/player/stay' method='post'>
+<input type='submit' class='btn btn-warning' value='Stay' />
+</form>
+<% end %>
+<br/>
+<p>Dealer has <%= calculate_total(session[:dealer_cards])%></p>
