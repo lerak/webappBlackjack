@@ -1,4 +1,11 @@
-<h3>welcome <%= session[:player_name] %></h3>
+
+ <%if @error %>
+      <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+    <%if @success %>
+      <div class="alert alert-success"><%=@success%></div>
+      <% end %>
+<div id="game"><h3>welcome <%= session[:player_name] %></h3>
 
 <% if @play_again %>
 <p>
@@ -20,11 +27,11 @@
 <% end %>
 	<% if @show_dealer_hit_button %><p>
 	<h5>Dealer has <%= calculate_total(session[:dealer_cards])%></h5>
-	<form action='/game/dealer/hit' method='post'>
+	<form id="dealer_hit" action='/game/dealer/hit' method='post'>
 		<input type='submit' class='btn btn-primary' value='See Dealer cards &rarr;'></form></p>
 	<% end %>
 </div>
-<div class='well'>
+<div class='well' id="player_cards">
 <h5>Player Cards</h5>
 
 	<%session[:player_cards].each do |card| %>
@@ -45,4 +52,4 @@
 </form>
 <% end %>
 <br/>
-<p>Dealer has <%= calculate_total(session[:dealer_cards])%></p>
+<p>Dealer has <%= calculate_total(session[:dealer_cards])%></p></div>

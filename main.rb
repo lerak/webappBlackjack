@@ -137,7 +137,7 @@ post '/game/player/hit' do
   elsif calculate_total(session[:player_cards]) > 21
   	loser!("#{session[:player_name]} busted !!")
   end
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/player/stay' do
@@ -161,7 +161,7 @@ get '/game/dealer' do
   	### hits
   	@show_dealer_hit_button = true
   end
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/dealer/hit' do 
@@ -181,7 +181,7 @@ get '/game/compare' do
    else
    	tie!("#{session[:player_name]} stayed at #{player_total}, and the dealer stayed at #{dealer_total}")
    end
-   erb :game
+   erb :game , layout: false
 end
 
 get '/game_over' do 
